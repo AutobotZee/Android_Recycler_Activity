@@ -2,10 +2,12 @@ package com.example.list_act;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -15,12 +17,12 @@ import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
-    ArrayList<String> data1 ;
-    Context context;
-     public MyAdapter(Context ct, ArrayList<String> s1)
+    public ArrayList<Schedule_Item> data ;
+    public  Context context;
+     public MyAdapter(Context ct, ArrayList<Schedule_Item> s1)
      {
          context = ct;
-         data1 = s1;
+         data = s1;
      }
 
     @NonNull
@@ -35,13 +37,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-         holder.myText1.setText(data1.get(position));
+         holder.myText1.setText(data.get(position).Sch_name);
 
          holder.mainlayout.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
                  Intent intent = new Intent(context, SecondActivity.class);
-                 intent.putExtra("Sch_name", data1.get(position));
+                 intent.putExtra("ScheduleItem", data.get(position));
+                 intent.putExtra("position", position);
+                 intent.putExtra("All_Schedules",data);
                  context.startActivity(intent);
              }
          });
@@ -49,7 +53,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     @Override
     public int getItemCount() {
-        return data1.size();
+        return data.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -63,4 +67,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
             mainlayout = itemView.findViewById(R.id.mainLayout);
         }
     }
+
 }
+
